@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CloudWeather.Precipitation.Migrations
 {
-    [DbContext(typeof(PrecipDbContext))]
+    [DbContext(typeof(TemperatureDbContext))]
     [Migration("20230602071408_initial-migration")]
     partial class initialmigration
     {

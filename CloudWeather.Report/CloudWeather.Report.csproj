@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0e4ea824-05c8-4b71-b5bf-5947af09012f</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -27,8 +28,14 @@
 
   <ItemGroup>
     <None Remove="DataAccess\" />
+    <None Remove="BusinessLogic\" />
+    <None Remove="Config\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
+    <Folder Include="BusinessLogic\" />
+    <Folder Include="Config\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

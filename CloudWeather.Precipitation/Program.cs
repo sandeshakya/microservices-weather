@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-builder.Services.AddDbContext<PrecipDbContext>(
+builder.Services.AddDbContext<TemperatureDbContext>(
     options =>
     {
         options.EnableSensitiveDataLogging();
@@ -17,7 +17,7 @@ builder.Services.AddDbContext<PrecipDbContext>(
 
 var app = builder.Build();
 
-app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, PrecipDbContext db) =>
+app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, TemperatureDbContext db) =>
 {
     if (days == null || days < 1 || days > 30) {
         return Results.BadRequest("Enter a 'days' parameter between 1 and 30");
@@ -27,6 +27,13 @@ app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, Preci
         .Where(precip => precip.ZipCode == zip && precip.CreatedOn > startDate)
         .ToListAsync();
     return Results.Ok(results);
+});
+
+app.MapPost("/observation", async (Precipitation precip, TemperatureDbContext db) =>
+{
+    precip.CreatedOn = precip.CreatedOn.ToUniversalTime();
+    await db.AddAsync(precip);
+    await db.SaveChangesAsync();
 });
 
 
