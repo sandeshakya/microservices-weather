@@ -10,6 +10,7 @@ namespace CloudWeather.Report.DataAccess
 		public decimal RainfallTotalInches { get; set; }
 		public decimal SnowTotalInches { get; set; }
 		public string ZipCode { get; set; }
+		public int days { get; set; }
 	}
 }
 

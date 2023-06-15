@@ -42,6 +42,12 @@ namespace CloudWeather.Report.BusinessLogic
 
         public async Task<WeatherReport> BuildWeeklyReport(string zip, int days)
         {
+            var foundRecord = _db.WeatherReport.Where(weatherReport => weatherReport.ZipCode == zip && weatherReport.days == days).FirstOrDefault();
+
+            if(foundRecord != null) {
+                return foundRecord;
+	        }
+            
             var httpClient = _http.CreateClient();
             var precipData = await FetchPrecipitationData(httpClient, zip, days);
             decimal totalSnow = GetTotalSnow(precipData);
@@ -63,7 +69,8 @@ namespace CloudWeather.Report.BusinessLogic
                 SnowTotalInches = totalSnow,
                 RainfallTotalInches = totalRain,
                 CreatedOn = DateTime.UtcNow,
-                ZipCode = zip
+                ZipCode = zip,
+                days = days
             };
             _db.Add(weatherReport);
             await _db.SaveChangesAsync();
@@ -136,6 +143,7 @@ namespace CloudWeather.Report.BusinessLogic
 
             return $"{protocol}://{host}:{port}/observation/{zip}?days={days}";
         }
+    
     }
 }
 

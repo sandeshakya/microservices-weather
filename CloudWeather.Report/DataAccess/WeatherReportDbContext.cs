@@ -13,7 +13,7 @@ namespace CloudWeather.Report.DataAccess
         {
         }
 
-		DbSet<WeatherReport> WeatherReport { get; set; }
+		public DbSet<WeatherReport> WeatherReport { get; set; }
 
         private static void SnakeCaseIdentityTableName(ModelBuilder modelBuilder)
         {
